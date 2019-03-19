@@ -2,10 +2,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package network
+package net
 
 import (
 	"log"
+	"os"
 	"time"
 
 	"github.com/autonomy/dhcp/dhcpv4"
@@ -15,38 +16,7 @@ import (
 	"golang.org/x/sys/unix"
 )
 
-// Setup creates the network.
-func Setup(platform string) (err error) {
-
-	// TODO: Turn this into a log level
-	/*
-		log.Println("All available network links")
-		links, _ := netlink.LinkList()
-		for _, link := range links {
-			log.Printf("%+v", link)
-		}
-	*/
-
-	//ifup lo
-	ifname := "lo"
-	link, err := netlink.LinkByName(ifname)
-	if err != nil {
-		return err
-	}
-	if err = netlink.LinkSetUp(link); err != nil {
-		return err
-	}
-
-	//ifup eth0
-	ifname = "eth0"
-	link, err = netlink.LinkByName(ifname)
-	if err != nil {
-		return err
-	}
-	if err = netlink.LinkSetUp(link); err != nil {
-		return err
-	}
-
+func startDHCPClient() (err error) {
 	//dhcp request
 	modifiers := []dhcpv4.Modifier{
 		dhcpv4.WithRequestedOptions(
@@ -56,6 +26,12 @@ func Setup(platform string) (err error) {
 			dhcpv4.OptionNTPServers,
 		),
 	}
+
+	// Send hostname with DHCP request only if known and not an IP address
+	if hostname, err := os.Hostname(); err == nil && !hostnameIsIP() {
+		modifiers = append(modifiers, dhcpv4.WithOption(dhcpv4.OptHostName(hostname)))
+	}
+
 	if err = dhclient(ifname, modifiers); err != nil {
 		return err
 	}
@@ -115,13 +91,11 @@ func dhclient4(ifname string, modifiers ...dhcpv4.Modifier) (*netboot.NetConf, e
 				log.Printf("using IP address %s", m.YourIPAddr.String())
 			}
 
-			hostname := m.YourIPAddr.String()
 			if m.HostName() != "" {
-				hostname = m.HostName()
-			}
-			log.Printf("using hostname: %s", hostname)
-			if err = unix.Sethostname([]byte(hostname)); err != nil {
-				return nil, err
+				log.Printf("using hostname: %s", m.HostName())
+				if err = unix.Sethostname([]byte(m.HostName())); err != nil {
+					return nil, err
+				}
 			}
 
 			break

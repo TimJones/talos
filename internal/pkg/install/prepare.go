@@ -22,6 +22,7 @@ import (
 	"github.com/autonomy/talos/internal/pkg/userdata"
 	"github.com/autonomy/talos/internal/pkg/version"
 	"github.com/pkg/errors"
+	"golang.org/x/sys/unix"
 )
 
 // Prepare handles setting/consolidating/defaulting userdata pieces specific to
@@ -29,6 +30,14 @@ import (
 // TODO: See if this would be more appropriate in userdata
 // nolint: dupl, gocyclo
 func Prepare(data *userdata.UserData) (err error) {
+	hostname, _ := os.Hostname()
+	if hostname == "" && data.Networking.OSNetworking.Hostname != "" {
+		log.Printf("using hostname: %s", data.Networking.OSNetworking.Hostname)
+		if err = unix.Sethostname([]byte(data.Networking.OSNetworking.Hostname)); err != nil {
+			return err
+		}
+	}
+
 	if data.Install == nil {
 		return nil
 	}

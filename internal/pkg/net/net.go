@@ -29,3 +29,46 @@ func IPAddrs() (ips []net.IP, err error) {
 
 	return ips, nil
 }
+
+// Setup creates the network.
+func Setup() (err error) {
+	//ifup lo
+	ifname := "lo"
+	link, err := netlink.LinkByName(ifname)
+	if err != nil {
+		return err
+	}
+	if err = netlink.LinkSetUp(link); err != nil {
+		return err
+	}
+
+	//ifup eth0
+	ifname = "eth0"
+	link, err = netlink.LinkByName(ifname)
+	if err != nil {
+		return err
+	}
+	if err = netlink.LinkSetUp(link); err != nil {
+		return err
+	}
+
+	return startDHCPClient()
+}
+
+// Checks if the hostname matches the IP address of any interface
+func hostnameIsIP() (bool, err error) {
+	var hostname string
+	if hostname, err = os.Hostname(); err != nil {
+		return false, err
+	}
+	var ips []net.IP
+	if ips, err = IPAdders(); err != nil {
+		return false, err
+	}
+	for _, ip := range ips {
+		if hostname == ip {
+			return true, nil
+		}
+	}
+	return false, nil
+}

@@ -66,8 +66,13 @@ type KubernetesSecurity struct {
 
 // Networking represents the set of options available to configure networking.
 type Networking struct {
-	OS         struct{} `yaml:"os"`
-	Kubernetes struct{} `yaml:"kubernetes"`
+	OS         *OSNetworking `yaml:"os"`
+	Kubernetes struct{}      `yaml:"kubernetes"`
+}
+
+// OSNetworking represents the set of networking options specific to the OS.
+type OSNetworking struct {
+	Hostname string `yaml:"hostname,omitempty"`
 }
 
 // Services represents the set of services available to configure.

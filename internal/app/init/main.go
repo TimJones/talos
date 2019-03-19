@@ -14,11 +14,11 @@ import (
 	"github.com/autonomy/talos/internal/app/init/internal/platform"
 	"github.com/autonomy/talos/internal/app/init/internal/rootfs"
 	"github.com/autonomy/talos/internal/app/init/internal/rootfs/mount"
-	"github.com/autonomy/talos/internal/app/init/pkg/network"
 	"github.com/autonomy/talos/internal/app/init/pkg/system"
 	ctrdrunner "github.com/autonomy/talos/internal/app/init/pkg/system/runner/containerd"
 	"github.com/autonomy/talos/internal/app/init/pkg/system/services"
 	"github.com/autonomy/talos/internal/pkg/constants"
+	"github.com/autonomy/talos/internal/pkg/net"
 	"github.com/autonomy/talos/internal/pkg/userdata"
 	"github.com/containerd/containerd"
 	criconstants "github.com/containerd/cri/pkg/constants"
@@ -98,7 +98,7 @@ func initram() (err error) {
 	}
 	log.Printf("platform is: %s", p.Name())
 	// Setup the network.
-	if err = network.Setup(p.Name()); err != nil {
+	if err = net.Setup(); err != nil {
 		return err
 	}
 	// Retrieve the user data.
@@ -230,7 +230,7 @@ func startSystemServices(data *userdata.UserData) {
 
 	// Launch dhclient
 	// nolint: errcheck
-	network.Setup("")
+	net.Setup()
 }
 
 func startKubernetesServices(data *userdata.UserData) {
