@@ -17,7 +17,7 @@ require (
 	github.com/jsimonetti/rtnetlink v0.0.0-20220124090637-bbb52d448503
 	github.com/mdlayher/ethtool v0.0.0-20211214014908-bc8fdcf6e99c
 	github.com/opencontainers/runtime-spec v1.0.3-0.20200929063507-e6143ca7d51d
-	github.com/stretchr/testify v1.7.0
+	github.com/stretchr/testify v1.7.5
 	github.com/talos-systems/crypto v0.3.5-0.20211220133734-6fa2d93d0382
 	github.com/talos-systems/go-blockdevice v0.2.6-0.20220125134504-7b9de26bc6bc
 	github.com/talos-systems/go-debug v0.2.1
@@ -25,7 +25,7 @@ require (
 	google.golang.org/genproto v0.0.0-20220118154757-00ab72f36ad5
 	google.golang.org/grpc v1.44.0
 	google.golang.org/protobuf v1.27.1
-	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
+	gopkg.in/yaml.v3 v3.0.1
 	inet.af/netaddr v0.0.0-20211027220019-c74959edd3b6
 )
 
