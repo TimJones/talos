@@ -35,7 +35,7 @@ require (
 	github.com/aws/aws-sdk-go v1.42.41
 	github.com/beevik/ntp v0.3.0
 	github.com/cenkalti/backoff/v4 v4.1.2
-	github.com/containerd/cgroups v1.0.2
+	github.com/containerd/cgroups v1.1.0
 	github.com/containerd/containerd v1.6.0-rc.0
 	github.com/containerd/containerd/api v1.6.0-beta.3
 	github.com/containerd/cri v1.19.0
@@ -85,7 +85,7 @@ require (
 	github.com/ryanuber/columnize v2.1.2+incompatible
 	github.com/scaleway/scaleway-sdk-go v1.0.0-beta.7
 	github.com/spf13/cobra v1.3.0
-	github.com/stretchr/testify v1.7.0
+	github.com/stretchr/testify v1.8.0
 	github.com/talos-systems/crypto v0.3.5-0.20211220133734-6fa2d93d0382
 	github.com/talos-systems/discovery-api v0.1.0
 	github.com/talos-systems/discovery-client v0.1.0
@@ -122,7 +122,7 @@ require (
 	google.golang.org/grpc v1.44.0
 	google.golang.org/protobuf v1.27.1
 	gopkg.in/freddierice/go-losetup.v1 v1.0.0-20170407175016-fc9adea44124
-	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
+	gopkg.in/yaml.v3 v3.0.1
 	inet.af/netaddr v0.0.0-20211027220019-c74959edd3b6
 	kernel.org/pub/linux/libs/security/libcap/cap v1.2.63
 	sigs.k8s.io/yaml v1.3.0
@@ -152,7 +152,7 @@ require (
 	github.com/briandowns/spinner v1.6.1 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/chai2010/gettext-go v0.0.0-20160711120539-c6fed771bfd5 // indirect
-	github.com/cilium/ebpf v0.8.0 // indirect
+	github.com/cilium/ebpf v0.9.1 // indirect
 	github.com/containerd/continuity v0.2.2 // indirect
 	github.com/containerd/fifo v1.0.0 // indirect
 	github.com/containerd/go-cni v1.1.1 // indirect
