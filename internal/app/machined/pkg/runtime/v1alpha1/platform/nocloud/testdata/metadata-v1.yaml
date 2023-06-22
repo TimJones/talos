@@ -16,3 +16,33 @@ config:
     - '192.168.1.1'
     search:
     - 'lan'
+  - type: physical
+    name: eth1
+    mac_address: '3c:ec:ef:b1:fd:1a'
+    mtu: 9000
+  - type: physical
+    name: eth2
+    mac_address: '3c:ec:ef:b1:fd:1b'
+    mtu: 9000
+  - type: bond
+    name: bond0
+    mac_address: '3c:ec:ef:b1:fd:1a'
+    mtu: 9000
+    bond_interfaces:
+      - eth1
+      - eth2
+    params:
+      bond-lacp-rate: fast
+      bond-miimon: 100
+      bond-mode: 802.3ad
+      bond-xmit-hash-policy: layer3+4
+  - type: vlan
+    name: bond0.5
+    mtu: 9000
+    vlan_id: 5
+    vlan_link: bond0
+    subnets:
+      - type: static
+        address: '192.168.5.11'
+        netmask: '255.255.255.0'
+        gateway: '192.168.5.1'
